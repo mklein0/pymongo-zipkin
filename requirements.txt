@@ -1,0 +1,2 @@
+py_zipkin>=0.4.0
+PyMongo>=3.1
