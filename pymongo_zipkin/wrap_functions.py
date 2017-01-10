@@ -89,16 +89,21 @@ class PyMongoZipkinInstrumentation(object):
         # type: (py_mongo.zipkin.zipkin_client_span, dict) -> None
 
         database, collection = message['collection'].split('.', 1)
+        operation = message['op']
+        statement = message['query']
+        #  if operation in ('insert', 'update'):
+        #      statement = '<redacted>'
 
         # Can only update annotations after span starts
         span.update_binary_annotations_for_root_span({
             'mongo.database': database,
             'mongo.collection': collection,
             'mongo.message.id': message['msg_id'],
+            'mongo.operation': operation,
             # 'mongo.connection_id': event.connection_id,
             # 'mongo.operation.id': message['msg_id'],
             # 'mongo.request_id': event.request_id,
-            'mongo.statement': message['query'],
+            'mongo.statement': statement,
         })
 
     def _instrument(self, original_method):

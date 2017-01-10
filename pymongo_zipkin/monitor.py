@@ -115,13 +115,22 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
 
         _local.set_span(key, span)
         span.start()
+        self.annotate_started_event(span, event)
+
+    def annotate_started_event(self, span, event):
+        # type: (py_zipkin.zipkin.zipkin_client_span, pymongo.monitoring.CommandStartedEvent) -> None
+        operation = ''
+        statement = event.command
+        # if operation in ('insert', 'update'):
+        #     statement = '<redacted>'
 
         # Can only update annotations after span starts
         span.update_binary_annotations_for_root_span({
             'mongo.connection_id': event.connection_id,
             'mongo.operation_id': event.operation_id,
             'mongo.request_id': event.request_id,
-            'mongo.statement': event.command,
+            'mongo.operation': operation,
+            'mongo.statement': statement,
         })
 
     def succeeded(self, event):
@@ -132,12 +141,16 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
         if span is None:
             return
 
+        self.annotate_succeeded_event(span, event)
+        span.stop()
+
+    def annotate_succeeded_event(self, span, event):
+        # type: (py_zipkin.zipkin.zipkin_client_span, pymongo.monitoring.CommandSucceededEvent) -> None
+
         # Add PyMongo attributes to span before stopping it. Noop is sampling is not set or 0
         span.update_binary_annotations_for_root_span({
             'mongo.reply': event.reply,
         })
-
-        span.stop()
 
     def failed(self, event):
         # type: (pymongo.monitoring.CommandFailedEvent) -> None
@@ -147,9 +160,13 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
         if span is None:
             return
 
+        self.annotate_failed_event(span, event)
+        span.stop()
+
+    def annotate_failed_event(self, span, event):
+        # type: (py_zipkin.zipkin.zipkin_client_span, pymongo.monitoring.CommandFailedEvent) -> None
+
         # Add PyMongo attributes to span before stopping it. Noop is sampling is not set or 0
         span.update_binary_annotations_for_root_span({
             'mongo.failure': event.failure,
         })
-
-        span.stop()
