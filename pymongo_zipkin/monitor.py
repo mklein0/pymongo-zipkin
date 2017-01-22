@@ -25,8 +25,6 @@ def http_transport(encoded_span):
     )
 """
 
-ZIPKIN_THRIFT_PREAMBLE = '\x0c\x00\x00\x00\x01'.encode()
-
 
 class _PyMongoInsrumentationLocal(threading.local):
 
@@ -61,6 +59,7 @@ class _PyMongoInsrumentationLocal(threading.local):
             del context[key]
 
         return val
+
 
 _local = _PyMongoInsrumentationLocal()
 

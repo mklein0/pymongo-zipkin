@@ -152,7 +152,10 @@ MONGO_RESPONSES = {
 
 def _mongodb_decode_wire_protocol_message(enc_message):
     # type: (bytes) -> dict
-    """ http://www.mongodb.org/display/DOCS/Mongo+Wire+Protocol """
+    """
+    http://www.mongodb.org/display/DOCS/Mongo+Wire+Protocol
+    https://gist.github.com/kesor/1589672#file-sql_mongodb_dump_middleware-py-L60-L86
+    """
 
     # Standard message header (message length, request ID, response To, Op Code)
     _, msg_id, _, opcode, _ = struct.unpack('<iiiii', enc_message[:20])
@@ -186,7 +189,9 @@ def _mongodb_decode_wire_protocol_message(enc_message):
 
 def _mongodb_decode_wire_protocol_response(enc_response):
     # type: (bytes) -> dict
-    """ http://www.mongodb.org/display/DOCS/Mongo+Wire+Protocol """
+    """
+    http://www.mongodb.org/display/DOCS/Mongo+Wire+Protocol
+    """
 
     # Standard message header (message length, request ID, response To, Op Code)
     _, msg_id, _, opcode, flags = struct.unpack('<iiiii', enc_response[:20])
