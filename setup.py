@@ -33,7 +33,7 @@ setup(
     name='PyMongo-Zipkin',
     version=module_version,
     url='',
-    license='BSD',
+    license='MIT',
     author='mklein0',
     author_email='mklein0@gmail.com',
 
@@ -43,7 +43,6 @@ setup(
         'Programming Language :: Python',
     ],
     packages=find_packages(),
-    zip_safe=False,
     platforms='any',
     install_requires=[
         'py_zipkin>=0.4.0',
