@@ -12,4 +12,4 @@ else:
 ZIPKIN_THRIFT_PREAMBLE = '\x0c\x00\x00\x00\x01'.encode()
 
 
-__version__ = '0.1'
+__version__ = '0.1+dev0'
