@@ -45,7 +45,7 @@ setup(
     packages=find_packages(),
     platforms='any',
     install_requires=[
-        'py_zipkin>=0.4.0',
+        'py_zipkin>=0.7.0',
         'PyMongo>=3.1',
     ],
 )

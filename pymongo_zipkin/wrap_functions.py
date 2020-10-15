@@ -95,7 +95,7 @@ class PyMongoZipkinInstrumentation(object):
         #      statement = '<redacted>'
 
         # Can only update annotations after span starts
-        span.update_binary_annotations_for_root_span({
+        span.update_binary_annotations({
             'mongo.database': database,
             'mongo.collection': collection,
             'mongo.message.id': message['msg_id'],

@@ -124,7 +124,7 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
         #     statement = '<redacted>'
 
         # Can only update annotations after span starts
-        span.update_binary_annotations_for_root_span({
+        span.update_binary_annotations({
             'mongo.connection_id': event.connection_id,
             'mongo.operation_id': event.operation_id,
             'mongo.request_id': event.request_id,
@@ -147,7 +147,7 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
         # type: (py_zipkin.zipkin.zipkin_client_span, pymongo.monitoring.CommandSucceededEvent) -> None
 
         # Add PyMongo attributes to span before stopping it. Noop is sampling is not set or 0
-        span.update_binary_annotations_for_root_span({
+        span.update_binary_annotations({
             'mongo.reply': event.reply,
         })
 
@@ -166,6 +166,6 @@ class PyMongoZipkinInstrumentation(monitoring.CommandListener):
         # type: (py_zipkin.zipkin.zipkin_client_span, pymongo.monitoring.CommandFailedEvent) -> None
 
         # Add PyMongo attributes to span before stopping it. Noop is sampling is not set or 0
-        span.update_binary_annotations_for_root_span({
+        span.update_binary_annotations({
             'mongo.failure': event.failure,
         })
