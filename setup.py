@@ -32,15 +32,20 @@ with open(os.path.join(HERE, 'CHANGES.rst')) as f:
 setup(
     name='PyMongo-Zipkin',
     version=module_version,
-    url='',
     license='MIT',
-    author='mklein0',
+    url='https://github.com/mklein0/pymongo-zipkin',
+    author='Marcos Klein',
     author_email='mklein0@gmail.com',
-
     description='An zipkin extension for pymongo library based on py_zipkin.',
+    long_description_content_type='text/x-rst',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: System :: Monitoring',
     ],
     packages=find_packages(),
     platforms='any',
